@@ -4,7 +4,7 @@ import random
 
 
 class Matice:
-    def __init__(self, n: int, m: int, data=None):
+    def __init__(self, n: int, m: int, data: list[list[int]] = None):
         """Inicializuje matici n x m."""
         self.n = n  # Počet řádků
         self.m = m  # Počet sloupců
@@ -30,7 +30,7 @@ class Matice:
         ]
         return Matice(self.n, self.m, result_data)
 
-    def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
+    def __mul__(self, other: Union[Matice, int]) -> Matice:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         if isinstance(other, Matice):
             # Násobení matic (pro maticové násobení musí být počet sloupců první matice
