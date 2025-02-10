@@ -162,10 +162,14 @@ std::ostream &operator<<(std::ostream &os, Node *head)
     Node *temp = head;
     while (temp != nullptr)
     {
-        os << temp->data << " -> ";
-        temp = temp->next;
+        os << temp->data;
+        if (temp->next != nullpr)
+        {
+             os << " ";
+        }
+        temp=temp->next;
     }
-    os << "nullptr";
+   
     return os;
 }
 
