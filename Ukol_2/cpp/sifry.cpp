@@ -3,9 +3,9 @@
 #include <string>
 
 // Funkce pro otevření souboru
-std::string otevri_soubor(const std::string& vstup.txt)
+std::string otevri_soubor(const std::string& vstup)
 {
-    std::ifstream soubor(vstup);
+    std::ifstream soubor(vstup.txt);
     if (!soubor.is_open()) {
         std::cerr << "Nepodařilo se otevřít soubor: " << vstup << std::endl;
         return "";
