@@ -1,18 +1,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cctype>
 
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string& vstup)
 {
-    std::ifstream soubor(vstup.txt);
+    std::ifstream soubor(vstup);
     if (!soubor.is_open()) {
         std::cerr << "Nepodařilo se otevřít soubor: " << vstup << std::endl;
         return "";
     }
 
     std::string obsah((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
-    soubor.close();
+   // soubor.close();
     return obsah;
 }
 
