@@ -19,7 +19,10 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    pass  # TODO: Implementujte funkci
+    produkt = 1
+    for cislo in cisla:
+        produkt *= cislo
+    return produkt
 
 
 def prumer(cisla: list[int]) -> float:
@@ -31,7 +34,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
-    pass
+    return sum(cisla) / len(cisla) if cisla else 0
 
 
 def median(cisla: list[int]) -> float:
@@ -43,7 +46,12 @@ def median(cisla: list[int]) -> float:
     Returns:
       Medián čísel.
     """
-    pass  # TODO: Implementujte funkci
+    cisla.sort()
+    n = len(cisla)
+    if n % 2 == 0:
+        return (cisla[n//2 - 1] + cisla[n//2]) / 2.0
+    else:
+        return cisla[n//2]
 
 
 def main():
