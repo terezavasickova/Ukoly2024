@@ -3,48 +3,11 @@
 #include <string>
 
 // Funkce pro otevření souboru
-
-a píše mi to tento error:18s
-1s
-Run cd Ukol_2/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
-CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
-  Compatibility with CMake < 3.10 will be removed from a future version of
-  CMake.
-
-  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
-  to tell CMake that the project requires at least <min> but has been updated
-  to work with policies introduced by <max> or earlier.
-
-
--- The C compiler identification is GNU 13.3.0
--- The CXX compiler identification is GNU 13.3.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Found GTest: /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestConfig.cmake (found version "1.14.0")
--- Configuring done (0.6s)
--- Generating done (0.0s)
--- Build files have been written to: /home/runner/work/Ukoly2024/Ukoly2024/Ukol_2/cpp/build
-[ 25%] Building CXX object CMakeFiles/sifry.dir/sifry.cpp.o
-[ 50%] Linking CXX executable sifry
-/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o: in function _start':
-(.text+0x1b): undefined reference to main'
-collect2: error: ld returned 1 exit status
-make[2]: *** [CMakeFiles/sifry.dir/build.make:101: sifry] Error 1
-make[1]: *** [CMakeFiles/Makefile2:90: CMakeFiles/sifry.dir/all] Error 2
-make: *** [Makefile:101: all] Error 2 
 std::string otevri_soubor(const std::string& vstup.txt)
 {
-    std::ifstream soubor(jmeno_souboru);
+    std::ifstream soubor(vstup.txt);
     if (!soubor.is_open()) {
-        std::cerr << "Nepodařilo se otevřít soubor: " << jmeno_souboru << std::endl;
+        std::cerr << "Nepodařilo se otevřít soubor: " << vstup.txt << std::endl;
         return "";
     }
 
