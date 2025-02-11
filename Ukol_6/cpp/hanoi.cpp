@@ -16,9 +16,10 @@ struct Tah
 void provedTah(vector<vector<int>> &veze, Tah &tah)
 {
     // Přesunutí disku mezi dvěma kolíky
-    veze[tah.na - 'A'].push_back(tah.disk);
-    veze[tah.z - 'A'].pop_back();
-    
+    if(!veze[tah.z-'A'].empty()){
+        veze[tah.na - 'A'].push_back(tah.disk);
+        veze[tah.z - 'A'].pop_back();
+    }
     // Uložení stavu věží po tahu
     tah.stavVezi = veze;
 }
@@ -45,10 +46,11 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     //přesunutí n-1 disků na pomocný kolík
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
-    if (veze[z-'A'].empty()) return;
+    
 
     //přesunutí posledního disku na cílový kolík
     Tah tah;
+    if (veze[z-'A'].empty()) return;
     tah.disk = veze[z - 'A'].back();
     tah.z = z;
     tah.na = cil;
@@ -91,6 +93,7 @@ int main()
 
     // Inicializace věží (první věž obsahuje všechny disky)
     vector<vector<int>> veze(3);
+    vector<Tah> tahy;
     for (int i = n; i > 0; i--)
     {
         veze[0].push_back(i);
