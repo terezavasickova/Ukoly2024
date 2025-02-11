@@ -92,7 +92,7 @@ int main()
     }
 
     // Inicializace věží (první věž obsahuje všechny disky)
-    vector<vector<int>> veze(3);
+    //vector<vector<int>> veze(3);
     vector<Tah> tahy;
     for (int i = n; i > 0; i--)
     {
