@@ -113,7 +113,7 @@ public:
         : x(x), y(y), direction(direction), waypoint_x(waypoint_x), waypoint_y(waypoint_y) {}
 
     // Hlavní funkce pro navigaci podle souboru a typu navigace (s nebo bez waypointu)
-    int navigate(const std::string& filepath, bool useWaypoint)
+    int naviguj(const std::string& filepath, bool useWaypoint)
     {
         std::ifstream file(filepath);
         if (!file.is_open())
@@ -148,12 +148,12 @@ int main()
     // Testování bez waypointu
     Lod lod1(0, 0, 'E', 10, 1);
     std::cout << "Manhattanova vzdálenost bez waypointu: "
-              << lod1.navigate("input.txt", false) << std::endl;
+              << lod1.naviguj("input.txt", false) << std::endl;
 
     // Testování s waypointem
     Lod lod2(0, 0, 'E', 10, 1);
     std::cout << "Manhattanova vzdálenost s waypointem: "
-              << lod2.navigate("input.txt", true) << std::endl;
+              << lod2.naviguj("input.txt", true) << std::endl;
 
     return 0;
 }
