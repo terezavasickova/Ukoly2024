@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdlib> // Pro std::abs
 
-class Ship
+class Lod
 {
 private:
     int x, y;             // pozice lodi
@@ -12,7 +12,7 @@ private:
     int waypoint_x, waypoint_y; // souřadnice waypointu
 
     // Pohyb lodi podle zadání N, S, E, W
-    void moveShip(char action, int value)
+    void moveLod(char action, int value)
     {
         switch (action)
         {
@@ -24,7 +24,7 @@ private:
     }
 
     // Otočení lodi -změna směru
-    void rotateShip(char action, int degrees)
+    void rotateLod(char action, int degrees)
     {
         std::string directions = "NESW";
         int index = directions.find(direction); // najdi aktuální směr
@@ -41,18 +41,18 @@ private:
     }
 
     // Zpracování jednoho zadání pro loď (bez waypointu)
-    void processShipInstruction(char action, int value)
+    void processLodInstruction(char action, int value)
     {
         switch (action)
         {
         case 'N': case 'S': case 'E': case 'W':
-            moveShip(action, value);
+            moveLod(action, value);
             break;
         case 'L': case 'R':
-            rotateShip(action, value); // otočení lodi vpravo/vlevo
+            rotateLod(action, value); // otočení lodi vpravo/vlevo
             break;
         case 'F':
-            moveShip(direction, value); // posunutí v aktuálním směru
+            moveLod(direction, value); // posunutí v aktuálním směru
             break;
         }
     }
@@ -109,7 +109,7 @@ private:
 
 public:
     // Konstruktor, který nastaví počáteční pozici lodi a waypointu
-    Ship(int x, int y, char direction, int waypoint_x, int waypoint_y)
+    Lod(int x, int y, char direction, int waypoint_x, int waypoint_y)
         : x(x), y(y), direction(direction), waypoint_x(waypoint_x), waypoint_y(waypoint_y) {}
 
     // Hlavní funkce pro navigaci podle souboru a typu navigace (s nebo bez waypointu)
@@ -134,7 +134,7 @@ public:
             }
             else // bez waypointu
             {
-                processShipInstruction(action, value);
+                processLodInstruction(action, value);
             }
         }
 
@@ -146,14 +146,14 @@ public:
 int main()
 {
     // Testování bez waypointu
-    Ship ship1(0, 0, 'E', 10, 1);
+    Lod lod1(0, 0, 'E', 10, 1);
     std::cout << "Manhattanova vzdálenost bez waypointu: "
-              << ship1.navigate("input.txt", false) << std::endl;
+              << lod1.navigate("input.txt", false) << std::endl;
 
     // Testování s waypointem
-    Ship ship2(0, 0, 'E', 10, 1);
+    Lod lod2(0, 0, 'E', 10, 1);
     std::cout << "Manhattanova vzdálenost s waypointem: "
-              << ship2.navigate("input.txt", true) << std::endl;
+              << lod2.navigate("input.txt", true) << std::endl;
 
     return 0;
 }
