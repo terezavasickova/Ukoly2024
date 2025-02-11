@@ -9,7 +9,7 @@ struct Tah
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // Uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi; //uloží stav veží po táhnutí
 };
 
 // Funkce pro provedení tahu (mění stav věží a aktualizuje tah)
@@ -23,12 +23,16 @@ void provedTah(vector<vector<int>> &veze, Tah &tah)
     tah.stavVezi = veze;
 }
 
-// Funkce pro řešení Hanojských věží (rekurzivně)
+//pro řešení Hanojských věží 
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
 {
-    if (n == 1)
+    if (n<=0)
     {
-        // Přesunutí jednoho disku
+        return;
+    }
+    if(n==1)
+    {
+        //přesunutí jednoho disku
         Tah tah;
         tah.disk = veze[z - 'A'].back();
         tah.z = z;
@@ -38,10 +42,12 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         return;
     }
 
-    // Přesunutí n-1 disků na pomocný kolík
+    //přesunutí n-1 disků na pomocný kolík
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
-    // Přesunutí posledního disku na cílový kolík
+    if (veze[z-'A'].empty()) return;
+
+    //přesunutí posledního disku na cílový kolík
     Tah tah;
     tah.disk = veze[z - 'A'].back();
     tah.z = z;
@@ -49,11 +55,11 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     provedTah(veze, tah);
     tahy.push_back(tah);
 
-    // Přesunutí n-1 disků z pomocného kolíku na cílový kolík
+    //přesunutí n-1 disků z pomocného kolíku na cílový kolík
     hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
-// Funkce pro zobrazení věží
+//zobrazení věží
 void zobrazVeze(const vector<vector<int>> &veze)
 {
     // Zobrazení každé věže
