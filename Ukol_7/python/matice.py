@@ -20,13 +20,12 @@ def reprezentace_matice(matice: list[list[int]]) -> str: #vrátí matici ve stri
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     # Zkontrolujeme, zda jsou matice prázdné
     if not matice1 or not matice2:
-        print("Chyba: Jedna nebo obě matice jsou prázdné.")
-        return None
+        return[]
 
     # Zkontrolujeme, zda mají matice stejné rozměry
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
         print("Chyba: Matice mají různé rozměry, součet není možný.")
-        return None
+        return []
 
     # Sečteme odpovídající prvky matic
     matice: list[list[int]] = []
@@ -40,13 +39,12 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     # Zkontrolujeme, zda jsou matice prázdné
     if not matice1 or not matice2:
-        print("Chyba: Jedna nebo obě matice jsou prázdné.")
-        return None
+       return[]
 
     # Zkontrolujeme, zda je násobení proveditelné
     if len(matice1[0]) != len(matice2):
         print("Chyba: Násobení matic není možné, počet sloupců první matice se neshoduje s počtem řádků druhé matice.")
-        return None
+        return []
 
     # Inicializujeme výslednou matici, která bude mít stejné rozměry jako počet řádků první matice a počet sloupců druhé matice
     matice: list[list[int]] = [[0] * len(matice2[0]) for _ in range(len(matice1))]
@@ -61,7 +59,9 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-   
+
+    if not matice or not matice[0]:
+      return[]
     #transpozice matice - řádky se vymění se sloupci
     matice: list[list[int]] = [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
     return matice
