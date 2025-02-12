@@ -92,14 +92,13 @@ int main()
     }
 
     // Inicializace věží (první věž obsahuje všechny disky)
-    //
+    vector<vector<int>> veze(3);
     vector<Tah> tahy;
     for (int i = n; i > 0; i--)
     {
         veze[0].push_back(i);
     }
-    vector<vector<int>> veze(3);
-    vector<Tah> tahy; // Vektor pro uložení tahů
+    
     hanoi(n, 'A', 'B', 'C', veze, tahy);
 
     // Zobrazení tahů a stavů věží
