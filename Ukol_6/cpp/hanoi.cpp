@@ -29,7 +29,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 {
     if (n<=0)
     {
-        tahy.push_back(Tah{});
+       // tahy.push_back(Tah{});
         return;
     }
     if(n==1)
