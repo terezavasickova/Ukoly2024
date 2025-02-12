@@ -34,6 +34,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     if(n==1)
     {
         //přesunutí jednoho disku
+        if (veze[z - 'A'].empty()) return;
         Tah tah;
         tah.disk = veze[z - 'A'].back();
         tah.z = z;
@@ -45,13 +46,13 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 
     //přesunutí n-1 disků na pomocný kolík
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
-
+    if (veze[z - 'A'].empty()) return;
     
 
     //přesunutí posledního disku na cílový kolík
     Tah tah;
-    if (veze[z-'A'].empty()) return;
-    tah.disk = veze[z - 'A'].back();
+   
+    //tah.disk = veze[z - 'A'].back();
     tah.z = z;
     tah.na = cil;
     provedTah(veze, tah);
@@ -93,7 +94,8 @@ int main()
 
     // Inicializace věží (první věž obsahuje všechny disky)
     vector<vector<int>> veze(3);
-    vector<Tah> tahy;
+    vector<Tah> tahy; // Vektor pro uložení tahů
+    
     for (int i = n; i > 0; i--)
     {
         veze[0].push_back(i);
