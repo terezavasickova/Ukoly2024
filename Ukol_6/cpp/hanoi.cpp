@@ -29,6 +29,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 {
     if (n<=0)
     {
+        tahy.push_back(Tah{});
         return;
     }
     if(n==1)
@@ -52,7 +53,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     //přesunutí posledního disku na cílový kolík
     Tah tah;
    
-    //tah.disk = veze[z - 'A'].back();
+    tah.disk = veze[z - 'A'].back();
     tah.z = z;
     tah.na = cil;
     provedTah(veze, tah);
