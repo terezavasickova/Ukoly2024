@@ -9,22 +9,30 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
     return '\n'.join(' '.join(str(x) for x in radek) for radek in matice) + '\n' if matice else ""
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+    # Když jsou obě matice prázdné seznamy, vrátíme prázdný seznam
+    if matice1 == [] and matice2 == []:
+        return []
+    # Když jedna z matic je None nebo prázdná, vrátíme None
     if not matice1 or not matice2:
-        return None  # Změna z [] na None
+        return None
+    # Kontrola rozměrů matic
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
         print("Chyba: Matice mají různé rozměry, součet není možný.")
-        return None  # Změna z [] na None
+        return None
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
 
-
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+    # Když jsou obě matice prázdné seznamy, vrátíme prázdný seznam
+    if matice1 == [] and matice2 == []:
+        return []
+    # Když jedna z matic je None nebo prázdná, vrátíme None
     if not matice1 or not matice2:
-        return None  # Změna z [] na None
+        return None
+    # Kontrola kompatibility matic pro násobení
     if len(matice1[0]) != len(matice2):
         print("Chyba: Násobení matic není možné, počet sloupců první matice se neshoduje s počtem řádků druhé matice.")
-        return None  # Změna z [] na None
+        return None
     return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
-
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     if not matice:
         return []
