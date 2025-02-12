@@ -8,20 +8,25 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 def reprezentace_matice(matice: list[list[int]]) -> str:
     return '\n'.join(' '.join(str(x) for x in radek) for radek in matice) + '\n' if matice else ""
 
-def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     if not matice1 or not matice2:
-        return None  # Oprava: místo [] vracíme None
+        return []  
 
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
         print("Chyba: Matice mají různé rozměry, součet není možný.")
-        return None  # Oprava: místo [] vracíme None
-
+        return []  
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
 
 
-def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     if not matice1 or not matice2:
-        return None  # Oprava: místo [] vracíme None
+        return []  
+
+    if len(matice1[0]) != len(matice2):
+        print("Chyba: Násobení matic není možné, počet sloupců první matice se neshoduje s počtem řádků druhé matice.")
+        return []  
+
+    return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
 
     if len(matice1[0]) != len(matice2):
         print("Chyba: Násobení matic není možné, počet sloupců první matice se neshoduje s počtem řádků druhé matice.")
