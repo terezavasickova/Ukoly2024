@@ -4,25 +4,27 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
     return [[random.randint(0, 9) for _ in range(m)] for _ in range(n)]
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
-    return '\n'.join(' '.join(str(x) for x in radek) for radek in matice) + '\n'
+    return '\n'.join(' '.join(str(x) for x in radek) for radek in matice) if matice else ""
 
-def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     if not matice1 or not matice2:
-        return None
+        return []
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
-        return None
+        return []
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
 
-def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     if not matice1 or not matice2:
-        return None
+        return []
     if len(matice1[0]) != len(matice2):
-        return None
+        return []
     return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    if not matice or not matice[0]:
-        return [[]] if matice == [[]] else []
+    if not matice:
+        return []
+    if matice == [[]]:
+        return [[]]
     return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 if __name__ == "__main__":
