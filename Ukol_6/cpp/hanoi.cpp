@@ -27,15 +27,18 @@ void provedTah(vector<vector<int>> &veze, Tah &tah)
 //pro řešení Hanojských věží 
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
 {
-    if (n<=0)
-    {
-       // tahy.push_back(Tah{});
-        return;
-    }
+    if (n<=0) return;
+
+     if (veze[z - 'A'].empty()) {
+        for (int i = n; i > 0; i--) {
+            veze[z - 'A'].push_back(i);
+        }
+     }
+    
     if(n==1)
     {
         //přesunutí jednoho disku
-        if (veze[z - 'A'].empty()) return;
+       // if (veze[z - 'A'].empty()) return;
         Tah tah;
         tah.disk = veze[z - 'A'].back();
         tah.z = z;
