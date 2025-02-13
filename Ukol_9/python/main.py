@@ -7,7 +7,7 @@ from typing import List, Optional
 # Dekorátor pro kontrolu existence knihy v knihovně podle ISBN
 def kniha_existuje(func):
     def wrapper(self, isbn, *args, **kwargs):
-        if not any(kniha.isbn == isbn for kniha in self.knihy) and isbn not in self.vypujcene_knihy:
+        if not any(kniha.isbn == isbn for kniha in self.knihy):
             raise ValueError(f"Kniha s ISBN {isbn} neexistuje.")
         return func(self, isbn, *args, **kwargs)
     return wrapper
@@ -64,7 +64,11 @@ class Knihovna:
         with open(soubor, mode='r', newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             prvni_radek = next(reader)
-            nazev_knihovny = prvni_radek[0].split(":")[1].strip()
+            if prvni_radek and "Knihovna:" in prvni_radek[0]:
+                nazev_knihovny = prvni_radek[0].split(":")[1].strip()
+            else:
+                nazev_knihovny = "Neznámá knihovna"
+
             knihovna = cls(nazev_knihovny)
 
             next(reader)  # Přeskočení záhlaví
@@ -140,9 +144,3 @@ if __name__ == "__main__":
 
     knihovna.vrat_knihu("9780345391803", ctenar1)
     print(f"Kniha {kniha1.nazev} byla vrácena.")
-
-    nalezene_knihy = knihovna.vyhledej_knihu(klicova_slovo="Galaxii")
-    print(f"Nalezené knihy: {[kniha.nazev for kniha in nalezene_knihy]}")
-
-    knihovna.zrus_registraci_ctenare(ctenar1)
-    print(f"Čtenář {ctenar1.jmeno} {ctenar1.prijmeni} byl zrušen z registrace.")
