@@ -7,7 +7,7 @@ from typing import List, Optional
 # Dekorátor pro kontrolu existence knihy v knihovně podle ISBN
 def kniha_existuje(func):
     def wrapper(self, isbn, *args, **kwargs):
-       if not any(kniha.isbn == isbn for kniha in self.knihy) and isbn not in self.vypujcene_knihy:
+        if not any(kniha.isbn == isbn for kniha in self.knihy) and isbn not in self.vypujcene_knihy:
             raise ValueError(f"Kniha s ISBN {isbn} neexistuje.")
         return func(self, isbn, *args, **kwargs)
     return wrapper
@@ -18,7 +18,6 @@ class Kniha:
         self.nazev = nazev
         self.autor = autor
         self.rok_vydani = rok_vydani
-        self._isbn = None
         self.isbn = isbn  # Spustí setter pro validaci
 
     @property
@@ -33,12 +32,10 @@ class Kniha:
 
 
 class Ctenar:
-  def __init__(self, jmeno: str, prijmeni: str):
-    self.jmeno = jmeno
-    self.prijmeni = prijmeni
-    self._cislo_prukazky = self.vygeneruj_cislo_prukazky() 
-    if self._cislo_prukazky is None:
-        raise ValueError("Chyba při generování čísla průkazky.")
+    def __init__(self, jmeno: str, prijmeni: str):
+        self.jmeno = jmeno
+        self.prijmeni = prijmeni
+        self._cislo_prukazky = self.vygeneruj_cislo_prukazky()
 
     @property
     def cislo_prukazky(self):
@@ -64,35 +61,29 @@ class Knihovna:
 
     @classmethod
     def z_csv(cls, soubor: str) -> 'Knihovna':
-    with open(soubor, mode='r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        prvni_radek = next(reader)
-        nazev_knihovny = prvni_radek[0].split(":")[1].strip()
-        knihovna = cls(nazev_knihovny)
-        
-   """ def z_csv(cls, soubor: str) -> 'Knihovna':
-        knihovna = cls("Neznámá knihovna")
         with open(soubor, mode='r', newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
-            next(reader)  # Skip the first row containing library name
+            prvni_radek = next(reader)
+            nazev_knihovny = prvni_radek[0].split(":")[1].strip()
+            knihovna = cls(nazev_knihovny)
+
+            next(reader)  # Přeskočení záhlaví
+
             for row in reader:
                 if row[0] == "kniha":
                     knihovna.knihy.append(Kniha(row[1], row[2], int(row[3]), row[4]))
                 elif row[0] == "ctenar":
                     ctenar = Ctenar(row[5], row[6])
-                    ctenar.cislo_prukazky = 123  # Assuming a mock value for card number
                     knihovna.ctenari.append(ctenar)
-        return knihovna"""
-    
+
+        return knihovna
 
     def pridej_knihu(self, kniha: Kniha):
-       # print(f"Přiávám knihu: {kniha.nazev}")
         self.knihy.append(kniha)
-        print(f"Aktuální knihy v knihovně: {[k.nazev for k in self.knihy]}")
 
     @kniha_existuje
     def odeber_knihu(self, isbn: str):
-        kniha = next(kniha for kniha in self.knihy if kniha.isbn == isbn)
+        kniha = next(k for k in self.knihy if k.isbn == isbn)
         self.knihy.remove(kniha)
 
     def vyhledej_knihu(self, klicova_slovo: Optional[str] = None, isbn: Optional[str] = None) -> List[Kniha]:
@@ -117,48 +108,41 @@ class Knihovna:
 
     @kniha_existuje
     def vypujc_knihu(self, isbn: str, ctenar: Ctenar):
-        """  if ctenar not in self.ctenari:
-        raise ValueError("Čtenář není registrován.")"""
         if ctenar not in self.ctenari:
             raise ValueError("Čtenář není registrován.")
         if isbn in self.vypujcene_knihy:
             raise ValueError(f"Kniha s ISBN {isbn} je již vypůjčena.")
 
-self.vypujcene_knihy[isbn] = (ctenar, date.today())  # Přidání do seznamu půjčených knih
-
+        self.vypujcene_knihy[isbn] = (ctenar, date.today())
 
     @kniha_existuje
     def vrat_knihu(self, isbn: str, ctenar: Ctenar):
         if isbn not in self.vypujcene_knihy:
             raise ValueError(f"Kniha s ISBN {isbn} není vypůjčena.")
+
         vypujceni = self.vypujcene_knihy[isbn]
-        if vypujceni[0].jmeno != ctenar.jmeno or vypujceni[0].prijmeni != ctenar.prijmeni:
+        if vypujceni[0].cislo_prukazky != ctenar.cislo_prukazky:
             raise ValueError(f"Tuto knihu si nevypůjčil čtenář {ctenar.jmeno} {ctenar.prijmeni}.")
+
         del self.vypujcene_knihy[isbn]
 
 
 if __name__ == "__main__":
-    # Testování knihovny a čtenářů
     knihovna = Knihovna("Městská knihovna")
     kniha1 = Kniha("Stopařův průvodce po Galaxii", "Douglas Adams", 1979, "9780345391803")
     knihovna.pridej_knihu(kniha1)
 
     ctenar1 = Ctenar("Jan", "Novák")
-    ctenar1.cislo_prukazky = Ctenar.vygeneruj_cislo_prukazky()
     knihovna.registruj_ctenare(ctenar1)
 
-    # Vypůjčení knihy
     knihovna.vypujc_knihu("9780345391803", ctenar1)
     print(f"Kniha {kniha1.nazev} byla vypůjčena čtenáři {ctenar1.jmeno}.")
 
-    # Vrácení knihy
     knihovna.vrat_knihu("9780345391803", ctenar1)
     print(f"Kniha {kniha1.nazev} byla vrácena.")
 
-    # Vyhledání knihy
     nalezene_knihy = knihovna.vyhledej_knihu(klicova_slovo="Galaxii")
     print(f"Nalezené knihy: {[kniha.nazev for kniha in nalezene_knihy]}")
 
-    # Zrušení registrace čtenáře
     knihovna.zrus_registraci_ctenare(ctenar1)
     print(f"Čtenář {ctenar1.jmeno} {ctenar1.prijmeni} byl zrušen z registrace.")
