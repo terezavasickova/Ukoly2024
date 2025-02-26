@@ -1,132 +1,79 @@
-from __future__ import annotations
+import csv
+from datetime import date
 from .Kniha import Kniha
 from .Ctenar import Ctenar
-import csv
-import datetime
-
 
 class Knihovna:
     def __init__(self, nazev: str):
         self.nazev = nazev
-        self.knihy: list[Kniha] = []
-        self.ctenari: list[Ctenar] = []
+        self.knihy = []
+        self.ctenari = []
         self.vypujcene_knihy = {}
 
     def kniha_existuje(funkce):
-        """
-        Dekorátor kontrolující existenci knihy v knihovně.
-
-        Args:
-            funkce: Funkce, která má být volána po kontrole existence knihy.
-        """
-
-        def wrapper(self, isbn: str, *args, **kwargs):
-            """
-            Wrapper funkce kontrolující existenci knihy před voláním dané funkce.
-            """
+        def wrapper(self, isbn, *args, **kwargs):
+            if not any(kniha.isbn == isbn for kniha in self.knihy):
+                raise ValueError(f"Kniha s ISBN {isbn} neexistuje.")
             return funkce(self, isbn, *args, **kwargs)
         return wrapper
 
     @classmethod
-    def z_csv(cls, soubor: str) -> Knihovna:
-        """
-        Načte data knihovny ze souboru CSV.
+    def z_csv(cls, soubor: str) -> "Knihovna":
+        with open(soubor, mode="r", encoding="utf-8") as csvfile:
+            reader = csv.reader(csvfile)
+            prvni_radek = next(reader)
+            nazev_knihovny = prvni_radek[0].split(":")[1].strip() if "Knihovna:" in prvni_radek[0] else "Neznámá knihovna"
+            knihovna = cls(nazev_knihovny)
 
-        Args:
-            soubor: Cesta k souboru CSV.
-        Returns:
-            Objekt Knihovna načtený ze souboru.
-        """
-        return Knihovna("Neznámá knihovna")
+            next(reader)  # Přeskočení záhlaví
+
+            for row in reader:
+                if row[0] == "kniha":
+                    knihovna.knihy.append(Kniha(row[1], row[2], int(row[3]), row[4]))
+                elif row[0] == "ctenar":
+                    knihovna.ctenari.append(Ctenar(row[5], row[6]))
+
+        return knihovna
 
     def pridej_knihu(self, kniha: Kniha):
-        """
-        Přidá knihu do knihovny.
-
-        Args:
-            kniha: Objekt knihy, který má být přidán.
-        """
-        pass
+        self.knihy.append(kniha)
 
     @kniha_existuje
     def odeber_knihu(self, isbn: str):
-        """
-        Odebere knihu z knihovny.
-
-        Args:
-            isbn: ISBN knihy, která má být odebrána.
-        Raises:
-            ValueError: Pokud kniha s daným ISBN neexistuje.
-        """
-        pass
+        self.knihy = [k for k in self.knihy if k.isbn != isbn]
 
     def vyhledej_knihu(self, klicova_slovo: str = "", isbn: str = ""):
-        """
-        Vyhledá knihy podle klíčového slova nebo ISBN.
-
-        Args:
-            klicova_slovo: Klíčové slovo pro vyhledávání v názvu nebo autorovi.
-            isbn: ISBN knihy.
-        Returns:
-            Seznam nalezených knih.
-        """
-        return []
+        if isbn:
+            return [kniha for kniha in self.knihy if kniha.isbn == isbn]
+        return [kniha for kniha in self.knihy if klicova_slovo.lower() in kniha.nazev.lower()]
 
     def registruj_ctenare(self, ctenar: Ctenar):
-        """
-        Zaregistruje čtenáře do knihovny.
-
-        Args:
-            ctenar: Objekt čtenáře, který má být zaregistrován.
-        """
-        pass
+        self.ctenari.append(ctenar)
 
     def zrus_registraci_ctenare(self, ctenar: Ctenar):
-        """
-        Zruší registraci čtenáře v knihovně.
-
-        Args:
-            ctenar: Objekt čtenáře, jehož registrace má být zrušena.
-        """
-        pass
+        self.ctenari.remove(ctenar)
 
     def vyhledej_ctenare(self, klicova_slovo: str = "", cislo_prukazky: int = None):
-        """
-        Vyhledá čtenáře podle klíčového slova nebo čísla průkazky.
-
-        Args:
-            klicova_slovo: Klíčové slovo pro vyhledávání v jméně nebo příjmení.
-            cislo_prukazky: Číslo průkazky čtenáře.
-        Returns:
-            Seznam nalezených čtenářů.
-        """
-        return []
+        if cislo_prukazky:
+            return [ctenar for ctenar in self.ctenari if ctenar.cislo_prukazky == cislo_prukazky]
+        return [ctenar for ctenar in self.ctenari if klicova_slovo.lower() in ctenar.jmeno.lower()]
 
     @kniha_existuje
     def vypujc_knihu(self, isbn: str, ctenar: Ctenar):
-        """
-        Vypůjčí knihu čtenáři.
-
-        Args:
-            isbn: ISBN knihy, která má být vypůjčena.
-            ctenar: Objekt čtenáře, který si knihu půjčuje.
-        Raises:
-            ValueError: Pokud kniha s daným ISBN neexistuje nebo je již vypůjčena.
-        """
-        pass
+        if ctenar not in self.ctenari:
+            raise ValueError("Čtenář není registrován.")
+        if isbn in self.vypujcene_knihy:
+            raise ValueError(f"Kniha s ISBN {isbn} je již vypůjčena.")
+        self.vypujcene_knihy[isbn] = (ctenar, date.today())
 
     @kniha_existuje
     def vrat_knihu(self, isbn: str, ctenar: Ctenar):
-        """
-        Vrátí knihu.
+        if isbn not in self.vypujcene_knihy:
+            raise ValueError(f"Kniha s ISBN {isbn} není vypůjčena.")
+        vypujceni = self.vypujcene_knihy[isbn]
+        if vypujceni[0].cislo_prukazky != ctenar.cislo_prukazky:
+            raise ValueError(f"Tuto knihu si nevypůjčil čtenář {ctenar.jmeno} {ctenar.prijmeni}.")
+        del self.vypujcene_knihy[isbn]
 
-        Args:
-            isbn: ISBN knihy, která má být vrácena.
-            ctenar: Objekt čtenáře, který knihu vrací.
-        Raises:
-            ValueError: Pokud kniha s daným ISBN není vypůjčena tímto čtenářem.
-        """
-        pass
-
-    def __str__(self) -> str:
-        return ""
+    def __str__(self):
+        return f"Knihovna: {self.nazev}\nKnihy: {len(self.knihy)}\nČtenáři: {len(self.ctenari)}"
