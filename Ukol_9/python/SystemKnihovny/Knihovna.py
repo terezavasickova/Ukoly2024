@@ -60,11 +60,15 @@ class Knihovna:
 
     @kniha_existuje
     def vypujc_knihu(self, isbn: str, ctenar: Ctenar):
+        # Pokud čtenář není registrován, automaticky ho přidáme
         if ctenar not in self.ctenari:
-            raise ValueError("Čtenář není registrován.")
+            self.registruj_ctenare(ctenar)
+
         if isbn in self.vypujcene_knihy:
             raise ValueError(f"Kniha s ISBN {isbn} je již vypůjčena.")
+
         self.vypujcene_knihy[isbn] = (ctenar, date.today())
+
 
     @kniha_existuje
     def vrat_knihu(self, isbn: str, ctenar: Ctenar):
