@@ -5,7 +5,7 @@
 //Rostlina::Rostlina(int x, int y, Prostredi* prostredi)
   //  : Organismus(x, y, prostredi), energie(10) {}
 
-void Rostlina::pohyb() {}
+//void Rostlina::pohyb() {}
 
 void Rostlina::metabolismus() {
     ++energie;
@@ -20,8 +20,8 @@ void Rostlina::rozmnozovani() {
     }
 }
 
-void Rostlina::konzumuj(Organismus*) {}
+/*void Rostlina::konzumuj(Organismus*) {}
 
 char Rostlina::getTyp() const {
     return 'R';
-}
+}*/
