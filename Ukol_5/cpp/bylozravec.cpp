@@ -4,7 +4,10 @@
 #include <cstdlib>  
 
 Bylozravec::Bylozravec(int x, int y, Prostredi* prostredi)
-    : Zvire(x, y, prostredi), energie(100) {}
+    : Zvire(x, y, prostredi)
+{
+    energie=100;
+}
 
 void Bylozravec::rozmnozovani() {
     if (energie > 300) {
