@@ -1,80 +1,40 @@
 #include <iostream>
-#include <vector>
-
-//  třída Organismus
-class Organismus {
-public:
-    virtual void aktualizuj() = 0;
-    virtual ~Organismus() {}
-};
-
-//Třída Zvire (dědí z Organismus)
-class Zvire : public Organismus {
-protected:
-    int energie;
-public:
-    Zvire(int e) : energie(e) {}
-    virtual void pohyb() = 0;
-};
-
-// Třída Rostlina (dědí z Organismus)
-class Rostlina : public Organismus {
-public:
-    void aktualizuj() override {
-        std::cout << "Rostlina roste.\n";
-    }
-};
-
-// Třída Bylozravec (dědí z Zvire)
-class Bylozravec : public Zvire {
-public:
-    Bylozravec(int e) : Zvire(e) {}
-    void pohyb() override {
-        std::cout << "Býložravec se pohybuje.\n";
-    }
-    void aktualizuj() override {
-        std::cout << "Býložravec se krmí.\n";
-    }
-};
-
-// Třída Masozravec (dědí z Zvire)
-class Masozravec : public Zvire {
-public:
-    Masozravec(int e) : Zvire(e) {}
-    void pohyb() override {
-        std::cout << "Masožravec loví.\n";
-    }
-    void aktualizuj() override {
-        std::cout << "Masožravec se krmí.\n";
-    }
-};
-
-// Třída Prostredi (správa ekosystému)
-class Prostredi {
-private:
-    std::vector<Organismus*> organismy;
-public:
-    void pridatOrganismus(Organismus* o) {
-        organismy.push_back(o);
-    }
-    void aktualizuj() {
-        for (auto o : organismy) {
-            o->aktualizuj();
-        }
-    }
-};
-
+#include "prostredi.h"
+#include "rostlina.h"
+#include "bylozravec.h"
+#include "masozravec.h"
 
 int main() {
-    Prostredi ekosystem;
-    Rostlina r;
-    Bylozravec b(100);
-    Masozravec m(200);
+    // Vytvoření prostředí 20x20 (xy)
+    Prostredi prostredi(20, 20);
+
     
-    ekosystem.pridatOrganismus(&r);
-    ekosystem.pridatOrganismus(&b);
-    ekosystem.pridatOrganismus(&m);
+    for (int i = 0; i < 8; ++i) {
+        prostredi.pridejOrganismus<Rostlina>();
+    }
     
-    ekosystem.aktualizuj();
+    for (int i = 0; i < 2; ++i) {
+        prostredi.pridejOrganismus<Masozravec>();
+    }
+    
+   
+    for (int i = 0; i < 4; ++i) {
+        prostredi.pridejOrganismus<Bylozravec>();
+    }
+
+    
+
+    
+    std::cout << "Počáteční stav prostředí:" << std::endl;
+    prostredi.vypisStav();
+
+    //krokování
+    int pocetKroku = 50;
+    for (int i = 0; i < pocetKroku; ++i) {
+        std::cout << "Krok " << i + 1 << ":" << std::endl;
+        prostredi.krok();        // Proveď jeden krok simulace
+        prostredi.vypisStav();   // Vypiš stav prostředí
+    }
+
     return 0;
 }
