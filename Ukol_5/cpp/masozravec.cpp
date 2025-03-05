@@ -3,7 +3,10 @@
 #include <cstdlib>  // Pro rand()
 
 Masozravec::Masozravec(int x, int y, Prostredi* prostredi)
-    : Zvire(x, y, prostredi), energie(200) {}
+    : Zvire(x, y, prostredi)
+{
+    energie=200;
+}
 
 void Masozravec::rozmnozovani() {
     if (energie > 500) {
