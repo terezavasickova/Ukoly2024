@@ -16,7 +16,7 @@ public:
     template <typename T> void pridejOrganismus();
     template <typename T> void pridejOrganismus(int x, int y);
     void odeberOrganismus(Organismus* o);
-    void vypisStav();
+    void vypisStav() const;
 };
 
 #endif // PROSTREDI_H
