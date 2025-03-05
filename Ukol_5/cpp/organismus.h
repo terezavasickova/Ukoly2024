@@ -9,6 +9,9 @@ public:
     int energie; 
     Prostredi* prostredi; 
 
+int getX() const { return x; }
+    int getY() const { return y; }
+
     Organismus(int x, int y, Prostredi* prostredi);
     virtual ~Organismus() = default;
 
