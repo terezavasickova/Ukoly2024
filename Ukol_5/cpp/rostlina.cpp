@@ -2,8 +2,8 @@
 #include "prostredi.h"
 #include <cstdlib>
 
-Rostlina::Rostlina(int x, int y, Prostredi* prostredi)
-    : Organismus(x, y, prostredi), energie(10) {}
+//Rostlina::Rostlina(int x, int y, Prostredi* prostredi)
+  //  : Organismus(x, y, prostredi), energie(10) {}
 
 void Rostlina::pohyb() {}
 
