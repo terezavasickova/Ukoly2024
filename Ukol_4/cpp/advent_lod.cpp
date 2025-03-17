@@ -118,7 +118,7 @@ public:
         std::ifstream file(filepath);
         if (!file.is_open())
         {
-            std::cerr << "Soubor se mepodařilo otevřít: " << filepath << std::endl;
+            std::cerr << "Soubor se mepodarilo otevrit: " << filepath << std::endl;
             return -1; // když se soubor nepodaří otevřít
         }
 
@@ -147,12 +147,12 @@ int main()
 {
     // Testování bez waypointu
     Lod lod1(0, 0, 'E', 10, 1);
-    std::cout << "Manhattanova vzdálenost bez waypointu: "
+    std::cout << "Manhattanova vzdalenost bez waypointu: "
               << lod1.naviguj("input.txt", false) << std::endl;
 
     // Testování s waypointem
     Lod lod2(0, 0, 'E', 10, 1);
-    std::cout << "Manhattanova vzdálenost s waypointem: "
+    std::cout << "Manhattanova vzdalenost s waypointem: "
               << lod2.naviguj("input.txt", true) << std::endl;
 
     return 0;
