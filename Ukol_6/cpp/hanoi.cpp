@@ -72,7 +72,7 @@ void zobrazVeze(const vector<vector<int>> &veze)
     // Zobrazení každé věže
     for (int i = 0; i < 3; i++)
     {
-        cout << "Kolík " << char('A' + i) << ": ";
+        cout << "Kolik " << char('A' + i) << ": ";
         for (int disk : veze[i])
         {
             cout << disk << " ";
@@ -86,13 +86,13 @@ void zobrazVeze(const vector<vector<int>> &veze)
 int main()
 {
     int n;
-    cout << "Zadejte počet disků: ";
+    cout << "Zadejte pocet disku: ";
     cin >> n;
     cin.ignore();
 
     if (n <= 0)
     {
-        cout << "Počet disků musí být větší než 0!" << endl;
+        cout << "Pocet disku musi byt vetsi nez 0!" << endl;
         return 1;
     }
 
@@ -112,7 +112,7 @@ int main()
     // Zobrazení tahů a stavů věží
     for (const Tah &tah : tahy)
     {
-        cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
+        cout << "Presun disk " << tah.disk << " z koliku " << tah.z << " na kolik " << tah.na << endl;
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
 
