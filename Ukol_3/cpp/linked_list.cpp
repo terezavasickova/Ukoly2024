@@ -183,16 +183,16 @@ int main()
     insertAtEnd(&head, 3);
     insertAtEnd(&head, 4);
     insertAtIndex(&head, 5, 2);
-    std::cout << "Seznam po vložení prvků: " << head << std::endl;
-    std::cout << "První výskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << std::endl;
-    std::cout << "Seznam před tříděním: " << head << std::endl;
+    std::cout << "Seznam po vlozeni prvku: " << head << std::endl;
+    std::cout << "Prvni vyskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << std::endl;
+    std::cout << "Seznam pred tridenim: " << head << std::endl;
     sortList(&head);
-    std::cout << "Seznam po třídění: " << head << std::endl;
+    std::cout << "Seznam po trideni: " << head << std::endl;
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
-    std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    std::cout << "Seznam po smazani prvku: " << head << std::endl;
     deleteAtIndex(head, 1);
-    std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    std::cout << "Seznam po smazani prvku: " << head << std::endl;
     deleteList(&head);
 
     return 0;
