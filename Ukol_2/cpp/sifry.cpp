@@ -8,7 +8,7 @@ std::string otevri_soubor(const std::string& vstup)
 {
     std::ifstream soubor(vstup);
     if (!soubor.is_open()) {
-        std::cerr << "Nepodařilo se otevřít soubor: " << vstup << std::endl;
+        std::cerr << "Nepodarilo se otevrit soubor: " << vstup << std::endl;
         return "";
     }
 
@@ -75,7 +75,7 @@ void uloz_do_souboru(const std::string& jmeno_souboru, const std::string& obsah)
 {
     std::ofstream soubor(jmeno_souboru);
     if (!soubor.is_open()) {
-        std::cerr << "Nepodařilo se uložit do souboru: " << jmeno_souboru << std::endl;
+        std::cerr << "Nepodarilo se ulozit do souboru: " << jmeno_souboru << std::endl;
         return;
     }
 
@@ -95,7 +95,7 @@ int main()
 
     // Šifrování textu pomocí Vigenerovy šifry
     std::string sifrovany_text_vigener = vigener_sifra(vstupni_text, "tajny_klic", true);
-    std::cout << "Vigenerova šifra: " << sifrovany_text_vigener << std::endl;
+    std::cout << "Vigenerova sifra: " << sifrovany_text_vigener << std::endl;
 
     // Šifrování textu pomocí XOR šifry
     std::string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
@@ -107,9 +107,9 @@ int main()
     uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
 
     // Dešifrování textů
-    std::cout << "Dešifrovaný text pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
-    std::cout << "Dešifrovaný text pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajny_klic", false) << std::endl;
-    std::cout << "Dešifrovaný text pomocí XOR šifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
+    std::cout << "Desifrovany text pomoci Caesarovy sifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
+    std::cout << "Desifrovany text pomoci Vigenerovy sifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajny_klic", false) << std::endl;
+    std::cout << "Desifrovany text pomoci XOR sifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
 
     return 0;
 }
