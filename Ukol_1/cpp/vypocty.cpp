@@ -37,7 +37,7 @@ double median(std::vector<int> cisla) {
 
 #ifndef __TEST__
 int main() {
-    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
+    std::cout << "Zadejte seznam cisel oddelenych carkou: ";
     std::string vstup;
     std::getline(std::cin, vstup);
 
@@ -48,10 +48,10 @@ int main() {
         cisla.push_back(std::stoi(hodnota));
     }
 
-    std::cout << "Součet: " << soucet(cisla) << std::endl;
-    std::cout << "Součin: " << soucin(cisla) << std::endl;
-    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
-    std::cout << "Medián: " << median(cisla) << std::endl;
+    std::cout << "Soucet: " << soucet(cisla) << std::endl;
+    std::cout << "Soucin: " << soucin(cisla) << std::endl;
+    std::cout << "Prumerna hodnota: " << prumer(cisla) << std::endl;
+    std::cout << "Median: " << median(cisla) << std::endl;
 
     return 0;
 }
