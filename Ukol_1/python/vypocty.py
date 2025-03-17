@@ -37,7 +37,7 @@ def prumer(cisla: list[int]) -> float:
       Průměrná hodnota čísel.
     """
     if not cisla:
-        raise ValueError("Seznam čísel je prázdný")
+        raise ValueError("Seznam cisel je prazdny")
     return sum(cisla) / len(cisla)
 
 
@@ -51,7 +51,7 @@ def median(cisla: list[int]) -> float:
       Medián čísel.
     """
     if not cisla:
-        raise ValueError("Seznam čísel je prázdný")
+        raise ValueError("Seznam cisel je prazdny")
     cisla.sort()
     n = len(cisla)
     if n % 2 == 0:
@@ -62,13 +62,13 @@ def median(cisla: list[int]) -> float:
 
 def main():
     """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
-    vstup = input("Zadejte seznam čísel oddělených čárkou: ")
+    vstup = input("Zadejte seznam cisel oddelenych carkou: ")
     cisla = [int(cislo) for cislo in vstup.split(",")]
 
-    print("Součet:", soucet(cisla))
-    print("Součin:", soucin(cisla))
-    print("Průměrná hodnota:", prumer(cisla))
-    print("Medián:", median(cisla))
+    print("Soucet:", soucet(cisla))
+    print("Soucin:", soucin(cisla))
+    print("Prumerna hodnota:", prumer(cisla))
+    print("Median:", median(cisla))
 
 
 if __name__ == "__main__":
