@@ -17,7 +17,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
         return None
     # Kontrola rozměrů matic
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
-        print("Chyba: Matice mají různé rozměry, součet není možný.")
+        print("Chyba: Matice maji ruzne rozmery, soucet neni mozny.")
         return None
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
 
@@ -30,7 +30,7 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
         return None
     # Kontrola kompatibility matic pro násobení
     if len(matice1[0]) != len(matice2):
-        print("Chyba: Násobení matic není možné, počet sloupců první matice se neshoduje s počtem řádků druhé matice.")
+        print("Chyba: Nasobeni matic neni mozne, pocet sloupcu prvni matice se neshoduje s poctem radku druhe matice.")
         return None
     return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
@@ -51,12 +51,12 @@ if __name__ == "__main__":
 
     soucet = soucet_matic(matice1, matice1)
     print("Součet matic:")
-    print(reprezentace_matice(soucet) if soucet else "Operace není možná.")
+    print(reprezentace_matice(soucet) if soucet else "Operace neni mozna.")
 
     nasobek = nasobeni_matic(matice1, matice2)
-    print("Násobení matic:")
-    print(reprezentace_matice(nasobek) if nasobek else "Operace není možná.")
+    print("Nasobeni matic:")
+    print(reprezentace_matice(nasobek) if nasobek else "Operace neni mozna.")
 
     transponovana = transpozice_matice(matice1)
-    print("Transponovaná matice:")
+    print("Transponovana matice:")
     print(reprezentace_matice(transponovana))
